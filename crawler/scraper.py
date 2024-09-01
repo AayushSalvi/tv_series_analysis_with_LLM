@@ -7,7 +7,7 @@ class BlogSpider(scrapy.Spider):
 
     def parse(self, response):
         for href in response.css('navibox toccolours mw-collapsible mw-made-collapsible')[0].css("a::attr(href)").extract():
-            extracted_data = scrapy.Request("https://naruto.fandom.com"+href,
+            extracted_data = scrapy.Request("https://onepiece.fandom.com"+href,
                            callback=self.parse_jutsu)
             yield extracted_data
 
@@ -15,15 +15,15 @@ class BlogSpider(scrapy.Spider):
             yield response.follow(next_page, self.parse)
     
     def parse_jutsu(self, response):
-        jutsu_name = response.css("span.mw-page-title-main::text").extract()[0]
-        jutsu_name = jutsu_name.strip()
+        category = response.css("span.mw-page-title-main::text").extract()[0]
+        category = category.strip()
 
         div_selector = response.css("div.mw-parser-output")[0]
         div_html = div_selector.extract()
 
         soup = BeautifulSoup(div_html).find('div')
 
-        jutsu_type=""
+        title=""
         if soup.find('aside'):
             aside = soup.find('aside')
 
@@ -31,15 +31,15 @@ class BlogSpider(scrapy.Spider):
                 if cell.find('h3'):
                     cell_name = cell.find('h3').text.strip()
                     if cell_name == "Classification":
-                        jutsu_type = cell.find('div').text.strip()
+                        title = cell.find('div').text.strip()
 
         soup.find('aside').decompose()
 
-        jutsu_description = soup.text.strip()
-        jutsu_description = jutsu_description.split('Trivia')[0].strip()
+        text = soup.text.strip()
+        text = text.split('Trivia')[0].strip()
 
         return dict (
-            jutsu_name = jutsu_name,
-            jutsu_type = jutsu_type,
-            jutsu_description = jutsu_description
+            category = category,
+            title = title,
+            text = text
         )
