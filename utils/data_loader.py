@@ -1,5 +1,6 @@
 import pandas as pd 
 from glob import glob
+import os
 def load_subtitles_dataset(dataset_path):
     subtitles_paths = glob(dataset_path+'/*.ass')
     sub_sorted = sorted(subtitles_paths, key=lambda x: int(os.path.splitext(os.path.basename(x))[0]))
@@ -9,7 +10,7 @@ def load_subtitles_dataset(dataset_path):
     for path in sub_sorted:
 
         #Read Lines
-        with open(path,'r') as file:
+        with open(path,'r',encoding="utf8") as file:
             lines = file.readlines()
             lines = lines[27:]
             lines =  [ ",".join(line.split(',')[9:])  for line in lines ]

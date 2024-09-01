@@ -1,8 +1,26 @@
 import gradio as gr
 from theme_classifier import ThemeClassifier
 
-def get_themes():
-    pass
+def get_themes(theme_list_str,subtitles_path,save_path):
+    theme_list = theme_list_str.split(',')
+    theme_classifier = ThemeClassifier(theme_list)
+    output_df = theme_classifier.get_themes(subtitles_path,save_path)
+
+    output_df = output_df[theme_list].sum().reset_index()
+    output_df.columns = ['Theme','Score']
+
+    output_chart = gr.BarPlot(
+        output_df,
+        x="Theme",
+        y="Score",
+        title="Series Themes",
+        tooltip=["Theme","Score"],
+        vertical=False,
+        width=500,
+        height=260
+    )
+
+    return output_chart
 
 def main():
     with gr.Blocks() as iface:
