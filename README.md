@@ -1,9 +1,9 @@
 # Analyzing series with NLP 
 
-In this project we are going to analyze a series with NLP and LLMs. We are going to scrape our own dataset, use zero shot classifiers, build our own LLM text classifier, use NER to build a character network and build a charatecter chatbot to chat with your favorite characters. And in the end we are going to put all that in web GUI with Gradio.
+In this project, I have conducted an in-depth analysis of a series using NLP and LLMs. I have independently scraped a dataset, implemented zero-shot classifiers, developed a custom LLM text classifier, applied named entity recognition (NER) to construct a character network, and built a chatbot designed to interact with specific characters. Finally, I have integrated all components into a user-friendly web interface using Gradio.
 
 # Overview 
-In this project, we have created 4 models, each containing the code for a different part of the project:
+In this project, I have created 4 models, each containing the code for a different part of the project:
 
 crawler: This folder contains the code for web scraping the internet to build a comprehensive dataset about the anime using Scrapy.
 
